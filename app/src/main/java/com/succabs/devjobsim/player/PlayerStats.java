@@ -31,10 +31,6 @@ public class PlayerStats {
         return skills.get(skill);
     }
 
-    public void updateSkillLevel(String skill, String newLevel) {
-        skills.put(skill, newLevel);
-    }
-
     public String getName() {
         return name;
     }

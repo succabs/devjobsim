@@ -1,11 +1,39 @@
 package com.succabs.devjobsim.gameLogic;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
 import java.util.Map;
+import java.util.Random;
 
 import com.succabs.devjobsim.player.PlayerStats;
 
 public class GameInitializer {
     private static PlayerStats playerStats;
+
+    // Define lists for randomized values
+    private static final List<String> firstNames = Arrays.asList("John", "Derek", "Emily", "Sarah", "Michael",
+            "Jessica", "David", "Olivia", "Daniel", "Sophia", "Andrew", "Emma", "Matthew", "Isabella", "William", "Mia",
+            "James", "Ava", "Joseph", "Charlotte");
+    private static final List<String> lastNames = Arrays.asList("Doe", "Assman", "Kirkby", "Palin", "Smith", "Johnson",
+            "Brown", "Davis", "Miller", "Wilson", "Moore", "Taylor", "Anderson", "Thomas", "Jackson", "White", "Harris",
+            "Clark", "Lewis", "Young");
+    private static final List<String> addresses = Arrays.asList("Street 1", "Street 2", "Street 3", "Avenue 1",
+            "Avenue 2", "Avenue 3", "Road 1", "Road 2", "Road 3", "Lane 1", "Lane 2", "Lane 3", "Boulevard 1",
+            "Boulevard 2", "Boulevard 3", "Place 1", "Place 2", "Place 3", "Court 1", "Court 2");
+    private static final List<String> skills = Arrays.asList("Java", "Python", "C++", "JavaScript", "HTML+CSS", "SQL",
+            "Ruby", "PHP", "Swift");
+    private static final int MIN_SKILLS = 2;
+    private static final int MAX_SKILLS = 4;
+    private static final List<String> universityNames = Arrays.asList(
+            "City University",
+            "Global Institute of Technology",
+            "Eastern State University",
+            "Western University",
+            "Northern College",
+            "Southern Technical Institute",
+            "Pacific Coast University");
 
     public static void initializeGame() {
         initializePlayerStats();
@@ -19,16 +47,39 @@ public class GameInitializer {
     private static void initializePlayerStats() {
         // Initialize the player stats and set the values
         playerStats = new PlayerStats();
-        playerStats.setName("Derek Developer");
-        playerStats.setAddress("Hardware Street 1337");
+        playerStats.setName(getRandomElement(firstNames) + " " + getRandomElement(lastNames));
+        playerStats.setAddress(getRandomElement(addresses));
         playerStats.setPhone("555-555-555");
-        playerStats.setMail("derek.developer@mail.com");
+        playerStats.setMail(getRandomElement(firstNames) + "." + getRandomElement(lastNames) + "@devmail.com");
         playerStats.setStress(50);
         playerStats.setHunger(10);
         playerStats.setMoney(100);
+        initializePlayerSkills();
+    }
 
-        playerStats.addSkill("Java", "Intermediate");
-        playerStats.addSkill("Python", "Beginner");
+    private static <T> T getRandomElement(List<T> list) {
+        Random random = new Random();
+        int index = random.nextInt(list.size());
+        return list.get(index);
+    }
+
+    private static void initializePlayerSkills() {
+        List<String> shuffledSkills = new ArrayList<>(skills);
+        Collections.shuffle(shuffledSkills);
+
+        int numSkills = getRandomNumber(MIN_SKILLS, MAX_SKILLS);
+        List<String> selectedSkills = shuffledSkills.subList(0, numSkills);
+
+        Random random = new Random();
+        for (String skill : selectedSkills) {
+            String level = random.nextInt(10) < 3 ? "Intermediate" : "Beginner";
+            playerStats.addSkill(skill, level);
+        }
+    }
+
+    private static int getRandomNumber(int min, int max) {
+        Random random = new Random();
+        return random.nextInt(max - min + 1) + min;
     }
 
     public static PlayerStats getPlayerStats() {
@@ -64,8 +115,8 @@ public class GameInitializer {
         }
 
         CVEntry educationEntry = new CVEntry("Education");
-        educationEntry.addField("School", "University of Example");
-        educationEntry.addField("Year", "2010-2014");
+        educationEntry.addField("School", getRandomElement(universityNames));
+        educationEntry.addField("Year", "2018-2023");
         educationEntry.addField("GPA", "3.5");
         educationEntry.addField("Major", "Computer Science");
 
