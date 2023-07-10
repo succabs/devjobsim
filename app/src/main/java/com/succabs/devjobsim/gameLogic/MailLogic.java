@@ -38,7 +38,7 @@ public class MailLogic {
             mailText.append("----------------------\n");
         }
 
-        gameUI.updateGameScreen(mailText.toString());
+        gameUI.updateMailScreen(mailText.toString());
 
         unreadMails = 0; // set unread mail count to 0
         updateMailButton(gameUI); // update the mail button
