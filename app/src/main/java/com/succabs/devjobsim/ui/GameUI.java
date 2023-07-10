@@ -7,12 +7,15 @@ import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextArea;
+import javafx.scene.text.Text;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
+import javafx.scene.layout.FlowPane;
 
 import com.succabs.devjobsim.gameLogic.MailLogic;
 import com.succabs.devjobsim.gameLogic.PhoneLogic;
@@ -30,7 +33,7 @@ import com.succabs.devjobsim.player.PlayerStats;
 
 public class GameUI extends Application {
 
-    private TextArea welcomeScreen;
+    private ScrollPane welcomeScreen;
     private TextArea mailScreen;
     private TextArea phoneScreen;
     private TextArea cvScreen;
@@ -67,43 +70,63 @@ public class GameUI extends Application {
         gameScreen.setPadding(new Insets(10)); // Set padding if needed
 
         // Create the welcome screen
-        this.welcomeScreen = new TextArea();
-        welcomeScreen.setEditable(false);
+        this.welcomeScreen = new ScrollPane();
+        welcomeScreen.setFitToWidth(true);
+        welcomeScreen.setFitToHeight(true);
+        welcomeScreen.setMouseTransparent(true); // Make it not selectable
+        welcomeScreen.setFocusTraversable(false); // Disable focus traversal
         // welcomeScreen.setPrefRowCount(20); // Set the number of visible rows
         VBox.setVgrow(welcomeScreen, Priority.ALWAYS); // Make the welcomeScreen grow to fill the available space
-        updateWelcomeScreen("Welcome to Developer Job Hunt Simulator.\n Try to get a job!");
+        // Create the styled logo text
+        String logoText = "Developer Job Hunt Simulator\n";
+        Label styledLogoText = new Label(logoText);
+        styledLogoText.getStyleClass().add("retro-logo");
+
+        // Create the plain welcome text
+        String welcomeText = "\nWelcome to Developer Job Hunt Simulator.\nTry to get a job!\n";
+
+        // Create a FlowPane to hold the styled logo text and welcome text
+        FlowPane textContainer = new FlowPane();
+        textContainer.getChildren().addAll(styledLogoText, new Text(welcomeText));
+
+        // Set the FlowPane as the content of the TextArea
+        welcomeScreen.setContent(textContainer);
 
         // Create the mail screen
         this.mailScreen = new TextArea();
         mailScreen.setEditable(false);
-        mailScreen.setStyle("-fx-text-fill: black;"); // Set the text color
+        // mailScreen.setMouseTransparent(true); // Make it not selectable
+        mailScreen.setFocusTraversable(false); // Disable focus traversal
         mailScreen.setPrefRowCount(20); // Set the number of visible rows
 
         // Create the mail screen
         this.phoneScreen = new TextArea();
         phoneScreen.setEditable(false);
-        phoneScreen.setStyle("-fx-text-fill: black;"); // Set the text color
+        phoneScreen.setMouseTransparent(true); // Make it not selectable
+        phoneScreen.setFocusTraversable(false); // Disable focus traversal
         phoneScreen.setPrefRowCount(20); // Set the number of visible rows
 
         // Create the mail screen
         this.jobScreen = new TextArea();
         jobScreen.setEditable(false);
-        jobScreen.setStyle("-fx-text-fill: black;"); // Set the text color
+        jobScreen.setMouseTransparent(true); // Make it not selectable
+        jobScreen.setFocusTraversable(false); // Disable focus traversal
         jobScreen.setPrefRowCount(20); // Set the number of visible rows
 
         // Create the mail screen
         this.cvScreen = new TextArea();
         cvScreen.setEditable(false);
-        cvScreen.setStyle("-fx-text-fill: black;"); // Set the text color
+        cvScreen.setMouseTransparent(true); // Make it not selectable
+        cvScreen.setFocusTraversable(false); // Disable focus traversal
         cvScreen.setPrefRowCount(20); // Set the number of visible rows
 
         this.outScreen = new TextArea();
         outScreen.setEditable(false);
-        outScreen.setStyle("-fx-text-fill: black;"); // Set the text color
+        outScreen.setMouseTransparent(true); // Make it not selectable
+        outScreen.setFocusTraversable(false); // Disable focus traversal
         outScreen.setPrefRowCount(20); // Set the number of visible rows
 
         this.fridgeScreen = new VBox();
-        fridgeScreen.setPadding(new Insets(10)); // Set padding if needed
 
         gameScreen.getChildren().add(welcomeScreen);
 
@@ -165,6 +188,8 @@ public class GameUI extends Application {
         // Create a field for player input
         TextArea playerInputField = new TextArea();
         playerInputField.setPrefRowCount(1); // Set the number of visible rows
+        playerInputField.setMouseTransparent(true); // Make it not selectable
+        playerInputField.setFocusTraversable(false); // Disable focus traversal
         playerInputField.setPromptText("Enter your command");
 
         // Create a button to submit player input
@@ -183,11 +208,6 @@ public class GameUI extends Application {
         buttonContainer.getChildren().addAll(mailButton, phoneButton, jobListingButton, cvButton, fridgeButton,
                 outButton);
         buttonContainer.setAlignment(Pos.TOP_CENTER);
-
-        // Apply styles to the labels
-        stressLabel.setStyle("-fx-text-fill: white;");
-        hungerLabel.setStyle("-fx-text-fill: white;");
-        moneyLabel.setStyle("-fx-text-fill: white;");
 
         // Create a container for player stats labels and buttonContainer
         VBox topContainer = new VBox(10); // Set spacing between labels and buttonContainer
@@ -242,14 +262,6 @@ public class GameUI extends Application {
             jobScreen.setText(text + "\n");
             jobScreen.positionCaret(jobScreen.getLength());
             jobScreen.setScrollTop(Double.MAX_VALUE);
-        });
-    }
-
-    public void updateWelcomeScreen(String text) {
-        Platform.runLater(() -> {
-            welcomeScreen.setText(text + "\n");
-            welcomeScreen.positionCaret(welcomeScreen.getLength());
-            welcomeScreen.setScrollTop(Double.MAX_VALUE);
         });
     }
 
