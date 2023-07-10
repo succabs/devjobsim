@@ -11,6 +11,11 @@ The name is about to change. Great ideas by ChatGPT:
 - Heroes of the Devverse: Forge Your Career Path
 - Jobseeker's Odyssey: Rise to IT Immortality.
 
+## Menu
+
+- Main menu
+- Choose difficulty, start game, credits, options
+
 ## Difficulties
 
 The game will have different difficulties:
@@ -25,7 +30,7 @@ Game ends when the player gets a job. The points are calculated with some patter
 
 # UI
 
-Instead of clock hh:mm:ss, show day and "morning, noon, .."
+Instead of clock hh:mm:ss, show day number and "morning, noon, .."
 Stats: stress, hunger .. . Change these when time passes.
 
 ## Buttons
@@ -43,6 +48,7 @@ Make the phone button flash when there is a call incoming.
 
 ### PHONE
 
+- Implement call and answering
 - Scammers
 - Invitations to job interviews
 - Phone interviews
@@ -50,11 +56,11 @@ Make the phone button flash when there is a call incoming.
 
 ### JOB LISTING
 
-- list of jobs
+- list of jobs from .csv file
 
 ### CV
 
-- list of your information, education and job history
+- data from .csv file
 
 ### FRIDGE
 
@@ -87,3 +93,12 @@ Make the phone button flash when there is a call incoming.
 
 - Accept/decline
 - Negotiate salary
+
+# TODO
+
+- instead of having a textArea as gameScreen, implement different views for every button.
+- implement also an interview view
+- how to do?
+
+1. make gamescreen pane/something
+2. different function for every button
