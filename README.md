@@ -1,2 +1,3 @@
 # devjobsim
- Developer Job Hunt Simulator with Java
+
+Developer Job Hunt Simulator
