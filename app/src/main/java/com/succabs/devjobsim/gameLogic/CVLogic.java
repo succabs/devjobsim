@@ -4,7 +4,9 @@ import com.succabs.devjobsim.ui.GameUI;
 import com.succabs.devjobsim.player.PlayerStats;
 
 import java.util.ArrayList;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 
 public class CVLogic {
     private static List<CVEntry> entries = new ArrayList<>();
@@ -21,17 +23,25 @@ public class CVLogic {
 
     public static void handleCVButton(GameUI gameUI, PlayerStats playerStats) {
         StringBuilder cvContent = new StringBuilder();
-        cvContent.append(playerStats.getName() + "\n");
+        Map<String, List<Field>> fieldsByType = new LinkedHashMap<>(); // Use LinkedHashMap to preserve insertion order
 
         for (CVEntry entry : entries) {
-            for (String fieldName : entry.getFieldNames()) {
-                cvContent.append(fieldName).append(": ").append(entry.getField(fieldName)).append("\n");
+            String type = entry.getType();
+            fieldsByType.putIfAbsent(type, new ArrayList<>());
+            fieldsByType.get(type).addAll(entry.getFields());
+        }
+
+        for (Map.Entry<String, List<Field>> entry : fieldsByType.entrySet()) {
+            cvContent.append(entry.getKey()).append("\n");
+            for (Field field : entry.getValue()) {
+                cvContent.append(field.getName()).append(": ").append(field.getValue()).append("\n");
             }
             cvContent.append("----------------------\n");
         }
 
         gameUI.updateGameScreen(cvContent.toString());
     }
+
 }
 
 class CVEntry {
@@ -53,23 +63,6 @@ class CVEntry {
 
     public void addField(String name, String value) {
         fields.add(new Field(name, value));
-    }
-
-    public List<String> getFieldNames() {
-        List<String> fieldNames = new ArrayList<>();
-        for (Field field : fields) {
-            fieldNames.add(field.getName());
-        }
-        return fieldNames;
-    }
-
-    public String getField(String name) {
-        for (Field field : fields) {
-            if (field.getName().equals(name)) {
-                return field.getValue();
-            }
-        }
-        return null;
     }
 }
 

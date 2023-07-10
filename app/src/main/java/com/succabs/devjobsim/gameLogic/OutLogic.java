@@ -2,15 +2,38 @@ package com.succabs.devjobsim.gameLogic;
 
 import com.succabs.devjobsim.ui.GameUI;
 
+import java.util.ArrayList;
+
+import java.util.Arrays;
+import java.util.List;
+
 public class OutLogic {
-    private static String places;
+    private static List<Place> availablePlaces = new ArrayList<>();
 
-    // function to handle what happens when the phone button is pressed
-    public static void handleOutButton(GameUI gameUI) {
-        places = "Nowhere to go.";
-
-        gameUI.updateGameScreen(places.toString());
-
+    public static void setAvailablePlaces(Place... places) {
+        availablePlaces.clear();
+        availablePlaces.addAll(Arrays.asList(places));
     }
 
+    public static void handleOutButton(GameUI gameUI) {
+        StringBuilder placesContent = new StringBuilder();
+        placesContent.append("Available Places to Go:\n");
+
+        for (Place place : availablePlaces) {
+            placesContent.append(place.getName()).append("\n");
+        }
+        gameUI.updateGameScreen(placesContent.toString());
+    }
+}
+
+class Place {
+    private String name;
+
+    public Place(String name) {
+        this.name = name;
+    }
+
+    public String getName() {
+        return name;
+    }
 }
