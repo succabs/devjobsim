@@ -27,6 +27,6 @@ public class FridgeLogic {
             fridgeContent.append("Amount: ").append(item.getAmount()).append("\n");
             fridgeContent.append("----------------------\n");
         }
-        gameUI.updateGameScreen(fridgeContent.toString());
+        gameUI.updateFridgeScreen(fridgeContent.toString());
     }
 }

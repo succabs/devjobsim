@@ -27,6 +27,7 @@ import com.succabs.devjobsim.player.PlayerStats;
 public class GameUI extends Application {
 
     private TextArea gameScreen2;
+    private VBox fridgeScreen;
     private Label stressLabel;
     private Label hungerLabel;
     private Label moneyLabel;
@@ -64,6 +65,10 @@ public class GameUI extends Application {
         gameScreen2.setPrefRowCount(20); // Set the number of visible rows
         updateGameScreen("Welcome.");
 
+        this.fridgeScreen = new VBox();
+        fridgeScreen.setStyle("-fx-background-color: white;"); // Set background color or other styles
+        fridgeScreen.setPadding(new Insets(10)); // Set padding if needed
+
         gameScreen.getChildren().add(gameScreen2);
 
         PlayerStats playerStats = GameInitializer.getPlayerStats();
@@ -82,8 +87,6 @@ public class GameUI extends Application {
         this.fridgeButton = new Button("Fridge");
         this.outButton = new Button("Go Outside");
         // Add event handlers or actions for the buttons
-        mailButton.setOnAction(event -> MailLogic.handleMailButton(this));
-
         mailButton.setOnAction(event -> {
             // Clear the current content
             gameScreen.getChildren().clear();
@@ -92,8 +95,15 @@ public class GameUI extends Application {
             gameScreen.getChildren().add(gameScreen2);
         });
 
+        fridgeButton.setOnAction(event -> {
+            // Clear the current content
+            gameScreen.getChildren().clear();
+            FridgeLogic.handleFridgeButton(this);
+            // Add the new content to the area container
+            gameScreen.getChildren().add(fridgeScreen);
+        });
+
         phoneButton.setOnAction(event -> PhoneLogic.handlePhoneButton(this));
-        fridgeButton.setOnAction(event -> FridgeLogic.handleFridgeButton(this));
         jobListingButton.setOnAction(event -> JobListingLogic.handleJobButton(this));
         cvButton.setOnAction(event -> CVLogic.handleCVButton(this, playerStats));
         outButton.setOnAction(event -> OutLogic.handleOutButton(this));
@@ -179,9 +189,9 @@ public class GameUI extends Application {
 
     public void updateFridgeScreen(String text) {
         Platform.runLater(() -> {
-            gameScreen2.setText(text + "\n");
-            gameScreen2.positionCaret(gameScreen2.getLength());
-            gameScreen2.setScrollTop(Double.MAX_VALUE);
+            Label fridgeLabel = new Label(text); // Create a label with the desired text
+            fridgeScreen.getChildren().add(fridgeLabel); // Add the label to the fridgeScreen container
+
         });
     }
 
