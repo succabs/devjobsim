@@ -36,6 +36,7 @@ public class GameInitializer {
             "Pacific Coast University");
 
     public static void initializeGame() {
+        MailLogic.loadMailsFromCSV();
         initializePlayerStats();
         initializeMails();
         initializeCVEntries();
@@ -88,12 +89,13 @@ public class GameInitializer {
 
     private static void initializeMails() {
         // Create and add mails to the mailbox
-        Mail mail1 = new Mail("HR Sarah", "Job opening", "We have a job opening for you! Apply now!");
-        Mail mail2 = new Mail("LoveFinder", "Find Your True Love",
-                "With just a little money, we will find your true love!");
+        // Mail mail1 = new Mail("HR Sarah", "Job opening", "We have a job opening for
+        // you! Apply now!");
+        // Mail mail2 = new Mail("LoveFinder", "Find Your True Love",
+        // "With just a little money, we will find your true love!");
         // Add mails to the mailbox using MailLogic.addMail(mail) method
-        MailLogic.addMail(mail1);
-        MailLogic.addMail(mail2);
+        // MailLogic.addMail(mail1);
+        // MailLogic.addMail(mail2);
     }
 
     private static void initializeCVEntries() {

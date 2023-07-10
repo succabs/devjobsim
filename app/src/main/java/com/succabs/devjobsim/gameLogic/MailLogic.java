@@ -4,6 +4,11 @@ import com.succabs.devjobsim.ui.GameUI;
 import javafx.application.Platform;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 
 public class MailLogic {
     private static List<Mail> mails = new ArrayList<>();
@@ -39,22 +44,50 @@ public class MailLogic {
         updateMailButton(gameUI); // update the mail button
     }
 
-    public static void checkMail(Time time, GameUI gameUI) {
+    private static final List<Mail> possibleMails = new ArrayList<>();
 
-        if (time.getSeconds() % 30 == 0) {
-            // Create a new mail and add it to the list
-            Mail newMail = new Mail("Matt", "New Mail", "This is a new mail.");
-            addMail(newMail);
-            unreadMails++;
-            updateMailButton(gameUI);
+    public static void loadMailsFromCSV() {
+        try {
+            InputStream inputStream = MailLogic.class.getResourceAsStream("/mails.csv");
+            BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream));
+
+            String line;
+            boolean isFirstLine = true;
+            while ((line = reader.readLine()) != null) {
+                if (isFirstLine) {
+                    isFirstLine = false;
+                    continue; // Skip the header line
+                }
+                String[] mailData = line.split(",", 3);
+                if (mailData.length == 3) {
+                    String sender = mailData[0].trim();
+                    String subject = mailData[1].trim();
+                    String content = mailData[2].trim();
+                    Mail mail = new Mail(sender, subject, content);
+                    possibleMails.add(mail);
+                }
+            }
+
+            reader.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+            // Handle file read error
         }
+    }
 
-        if ((time.getHours() == 0 && time.getMinutes() == 0 && time.getSeconds() == 5)) {
-            // Create a new mail and add it to the list
-            Mail newMail = new Mail("Matt", "New Mail", "This is a new mail.");
-            addMail(newMail);
-            unreadMails++;
-            updateMailButton(gameUI);
+    public static void checkMail(Time time, GameUI gameUI) {
+        if (time.getSeconds() % 5 == 0) {
+            // Check if there are any possible mails
+            if (!possibleMails.isEmpty()) {
+                // Select a random mail
+                Random random = new Random();
+                Mail randomMail = possibleMails.get(random.nextInt(possibleMails.size()));
+
+                // Add the random mail to the list
+                addMail(randomMail);
+                unreadMails++;
+                updateMailButton(gameUI);
+            }
         }
     }
 
