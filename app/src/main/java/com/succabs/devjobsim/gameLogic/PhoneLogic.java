@@ -13,7 +13,7 @@ public class PhoneLogic {
         } else
             caller = "No one";
 
-        gameUI.updateGameScreen(caller.toString() + " is calling.");
+        gameUI.updatePhoneScreen(caller.toString() + " is calling.");
 
     }
 

@@ -30,7 +30,7 @@ public class JobListingLogic {
             jobListing.append("Salary: ").append(job.getSalary()).append("\n");
         }
 
-        gameUI.updateGameScreen(jobListing.toString());
+        gameUI.updateJobScreen(jobListing.toString());
     }
 }
 

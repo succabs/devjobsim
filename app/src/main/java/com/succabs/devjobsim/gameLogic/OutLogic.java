@@ -22,7 +22,7 @@ public class OutLogic {
         for (Place place : availablePlaces) {
             placesContent.append(place.getName()).append("\n");
         }
-        gameUI.updateGameScreen(placesContent.toString());
+        gameUI.updateOutScreen(placesContent.toString());
     }
 }
 

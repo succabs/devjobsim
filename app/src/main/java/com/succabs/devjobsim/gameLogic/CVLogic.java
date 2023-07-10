@@ -39,7 +39,7 @@ public class CVLogic {
             cvContent.append("----------------------\n");
         }
 
-        gameUI.updateGameScreen(cvContent.toString());
+        gameUI.updateCVScreen(cvContent.toString());
     }
 
 }

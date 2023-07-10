@@ -1,0 +1,80 @@
+/* retro.css */
+
+/* Set the background color of the game window */
+.border-pane {
+  -fx-background-color: #c0c0c0;
+}
+
+/* Style the welcome screen */
+.text-area {
+  -fx-control-inner-background: #c0c0c0;
+  -fx-font-family: Arial, sans-serif;
+  -fx-font-size: 12px;
+  -fx-border-color: #000000;
+  -fx-border-width: 1px;
+  -fx-padding: 10px;
+}
+
+/* Style the mail screen */
+.text-area#mailScreen {
+  -fx-text-fill: black;
+}
+
+/* Style the phone screen */
+.text-area#phoneScreen {
+  -fx-text-fill: black;
+}
+
+/* Style the job screen */
+.text-area#jobScreen {
+  -fx-text-fill: black;
+}
+
+/* Style the CV screen */
+.text-area#cvScreen {
+  -fx-text-fill: black;
+}
+
+/* Style the out screen */
+.text-area#outScreen {
+  -fx-text-fill: black;
+}
+
+/* Style the fridge screen */
+.v-box#fridgeScreen {
+  -fx-background-color: white;
+}
+
+/* Style the player stats labels */
+.label.player-stats-label {
+  -fx-text-fill: white;
+}
+
+/* Style the buttons */
+.button {
+  -fx-background-color: #808080;
+  -fx-text-fill: white;
+  -fx-font-family: Arial, sans-serif;
+  -fx-font-size: 12px;
+  -fx-pref-width: 120px;
+}
+
+/* Style the submit button */
+.button#submitButton {
+  -fx-pref-width: 80px;
+}
+
+/* Style the player input field */
+.text-area#playerInputField {
+  -fx-control-inner-background: white;
+  -fx-pref-height: 30px;
+  -fx-font-family: Arial, sans-serif;
+  -fx-font-size: 12px;
+}
+
+/* Style the player input field prompt text */
+.text-area#playerInputField .text {
+  -fx-font-family: Arial, sans-serif;
+  -fx-font-size: 12px;
+  -fx-text-fill: #c0c0c0;
+}
