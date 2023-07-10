@@ -1,5 +1,7 @@
 package com.succabs.devjobsim.gameLogic;
 
+import java.util.Map;
+
 import com.succabs.devjobsim.player.PlayerStats;
 
 public class GameInitializer {
@@ -18,9 +20,15 @@ public class GameInitializer {
         // Initialize the player stats and set the values
         playerStats = new PlayerStats();
         playerStats.setName("Derek Developer");
+        playerStats.setAddress("Hardware Street 1337");
+        playerStats.setPhone("555-555-555");
+        playerStats.setMail("derek.developer@mail.com");
         playerStats.setStress(50);
         playerStats.setHunger(10);
         playerStats.setMoney(100);
+
+        playerStats.addSkill("Java", "Intermediate");
+        playerStats.addSkill("Python", "Beginner");
     }
 
     public static PlayerStats getPlayerStats() {
@@ -39,16 +47,21 @@ public class GameInitializer {
 
     private static void initializeCVEntries() {
         CVEntry informationEntry = new CVEntry("Information");
-        informationEntry.addField("Name", "Derek Developer");
-        informationEntry.addField("Address", "123 Main Street");
-        informationEntry.addField("Phone", "555-1234");
-        informationEntry.addField("Email", "john@example.com");
+        informationEntry.addField("Name", playerStats.getName());
+        informationEntry.addField("Address", playerStats.getAddress());
+        informationEntry.addField("Phone", playerStats.getPhone());
+        informationEntry.addField("Email", playerStats.getMail());
 
         CVEntry skillsEntry = new CVEntry("Skills");
-        skillsEntry.addField("Language", "Java");
-        skillsEntry.addField("Skill Level", "Intermediate");
-        skillsEntry.addField("Language", "Python");
-        skillsEntry.addField("Skill Level", "Beginner");
+        // Get the skills data from PlayerStats
+
+        // Get the skills data from PlayerStats
+        Map<String, String> skills = playerStats.getSkills();
+        for (Map.Entry<String, String> entry : skills.entrySet()) {
+            String skill = entry.getKey();
+            String level = entry.getValue();
+            skillsEntry.addField(skill, level);
+        }
 
         CVEntry educationEntry = new CVEntry("Education");
         educationEntry.addField("School", "University of Example");
