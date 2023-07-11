@@ -4,7 +4,7 @@ import java.util.List;
 
 import com.succabs.devjobsim.gameLogic.Item;
 import com.succabs.devjobsim.gameLogic.FridgeLogic;
-
+import com.succabs.devjobsim.player.PlayerStats;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.HBox;
@@ -30,6 +30,7 @@ public class FridgeView {
             consumeButton.setOnAction(event -> {
                 FridgeLogic.consumeItem(item);
                 updateFridgeScreen(FridgeLogic.getItems());
+
             });
 
             HBox itemContainer = new HBox(nameLabel, amountLabel, consumeButton);

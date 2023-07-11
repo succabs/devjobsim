@@ -7,39 +7,33 @@ import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextArea;
-import javafx.scene.text.Text;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
-import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
-import javafx.scene.layout.FlowPane;
+import java.net.URL;
 
 import com.succabs.devjobsim.gameLogic.MailLogic;
 import com.succabs.devjobsim.gameLogic.PhoneLogic;
 import com.succabs.devjobsim.gameLogic.JobListingLogic;
-
-import java.net.URL;
-
 import com.succabs.devjobsim.gameLogic.CVLogic;
 import com.succabs.devjobsim.gameLogic.FridgeLogic;
 import com.succabs.devjobsim.gameLogic.GameInitializer;
 import com.succabs.devjobsim.gameLogic.OutLogic;
-
 import com.succabs.devjobsim.gameLogic.Time;
 import com.succabs.devjobsim.player.PlayerStats;
 
 public class GameUI extends Application {
 
-    private ScrollPane welcomeScreen;
-    private TextArea mailScreen;
-    private TextArea phoneScreen;
-    private TextArea cvScreen;
-    private TextArea jobScreen;
-    private TextArea outScreen;
+    private WelcomeView welcomeView;
     private FridgeView fridgeView;
+    private JobView jobView;
+    private CVView cvView;
+    private OutView outView;
+    private PhoneView phoneView;
+    private MailView mailView;
+
     private Label stressLabel;
     private Label hungerLabel;
     private Label moneyLabel;
@@ -69,71 +63,20 @@ public class GameUI extends Application {
         VBox gameScreen = new VBox();
         gameScreen.setPadding(new Insets(10)); // Set padding if needed
 
-        // Create the welcome screen
-        this.welcomeScreen = new ScrollPane();
-        welcomeScreen.setFitToWidth(true);
-        welcomeScreen.setFitToHeight(true);
-        welcomeScreen.setMouseTransparent(true); // Make it not selectable
-        welcomeScreen.setFocusTraversable(false); // Disable focus traversal
-        // welcomeScreen.setPrefRowCount(20); // Set the number of visible rows
-        VBox.setVgrow(welcomeScreen, Priority.ALWAYS); // Make the welcomeScreen grow to fill the available space
-        // Create the styled logo text
-        String logoText = "Developer Job Hunt Simulator\n";
-        Label styledLogoText = new Label(logoText);
-        styledLogoText.getStyleClass().add("retro-logo");
-
-        // Create the plain welcome text
-        String welcomeText = "\nWelcome to Developer Job Hunt Simulator.\nTry to get a job!\n";
-
-        // Create a FlowPane to hold the styled logo text and welcome text
-        FlowPane textContainer = new FlowPane();
-        textContainer.getChildren().addAll(styledLogoText, new Text(welcomeText));
-
-        // Set the FlowPane as the content of the TextArea
-        welcomeScreen.setContent(textContainer);
-
-        // Create the mail screen
-        this.mailScreen = new TextArea();
-        mailScreen.setEditable(false);
-        // mailScreen.setMouseTransparent(true); // Make it not selectable
-        mailScreen.setFocusTraversable(false); // Disable focus traversal
-        mailScreen.setPrefRowCount(20); // Set the number of visible rows
-
-        // Create the mail screen
-        this.phoneScreen = new TextArea();
-        phoneScreen.setEditable(false);
-        phoneScreen.setMouseTransparent(true); // Make it not selectable
-        phoneScreen.setFocusTraversable(false); // Disable focus traversal
-        phoneScreen.setPrefRowCount(20); // Set the number of visible rows
-
-        // Create the mail screen
-        this.jobScreen = new TextArea();
-        jobScreen.setEditable(false);
-        jobScreen.setMouseTransparent(true); // Make it not selectable
-        jobScreen.setFocusTraversable(false); // Disable focus traversal
-        jobScreen.setPrefRowCount(20); // Set the number of visible rows
-
-        // Create the mail screen
-        this.cvScreen = new TextArea();
-        cvScreen.setEditable(false);
-        cvScreen.setMouseTransparent(true); // Make it not selectable
-        cvScreen.setFocusTraversable(false); // Disable focus traversal
-        cvScreen.setPrefRowCount(20); // Set the number of visible rows
-
-        this.outScreen = new TextArea();
-        outScreen.setEditable(false);
-        outScreen.setMouseTransparent(true); // Make it not selectable
-        outScreen.setFocusTraversable(false); // Disable focus traversal
-        outScreen.setPrefRowCount(20); // Set the number of visible rows
-
+        this.welcomeView = new WelcomeView();
+        this.mailView = new MailView();
         this.fridgeView = new FridgeView();
+        this.jobView = new JobView();
+        this.cvView = new CVView();
+        this.outView = new OutView();
+        this.phoneView = new PhoneView();
 
-        gameScreen.getChildren().add(welcomeScreen);
+        gameScreen.getChildren().add(welcomeView.getWelcomeScreen());
 
         PlayerStats playerStats = GameInitializer.getPlayerStats();
 
         // Create labels for player stats
-        this.timeLabel = new Label("0");
+        this.timeLabel = new Label();
         this.stressLabel = new Label("Stress: " + playerStats.getStress());
         this.hungerLabel = new Label("Hunger: " + playerStats.getHunger());
         this.moneyLabel = new Label("Money: " + playerStats.getMoney());
@@ -145,13 +88,12 @@ public class GameUI extends Application {
         this.cvButton = new Button("CV");
         this.fridgeButton = new Button("Fridge");
         this.outButton = new Button("Go Outside");
+
         // Add event handlers or actions for the buttons
         mailButton.setOnAction(event -> {
-            // Clear the current content
             gameScreen.getChildren().clear();
-            MailLogic.handleMailButton(this);
-            // Add the new content to the area container
-            gameScreen.getChildren().add(mailScreen);
+            MailLogic.handleMailButton(mailView, this);
+            gameScreen.getChildren().add(mailView.getMailScreen());
         });
 
         fridgeButton.setOnAction(event -> {
@@ -162,24 +104,24 @@ public class GameUI extends Application {
 
         phoneButton.setOnAction(event -> {
             gameScreen.getChildren().clear();
-            PhoneLogic.handlePhoneButton(this);
-            gameScreen.getChildren().add(phoneScreen);
+            PhoneLogic.handlePhoneButton(phoneView);
+            gameScreen.getChildren().add(phoneView.getPhoneScreen());
 
         });
         jobListingButton.setOnAction(event -> {
             gameScreen.getChildren().clear();
-            JobListingLogic.handleJobButton(this);
-            gameScreen.getChildren().add(jobScreen);
+            JobListingLogic.handleJobButton(jobView);
+            gameScreen.getChildren().add(jobView.getJobScreen());
         });
         cvButton.setOnAction(event -> {
             gameScreen.getChildren().clear();
-            CVLogic.handleCVButton(this, playerStats);
-            gameScreen.getChildren().add(cvScreen);
+            CVLogic.handleCVButton(cvView, playerStats);
+            gameScreen.getChildren().add(cvView.getCVScreen());
         });
         outButton.setOnAction(event -> {
             gameScreen.getChildren().clear();
-            OutLogic.handleOutButton(this);
-            gameScreen.getChildren().add(outScreen);
+            OutLogic.handleOutButton(outView);
+            gameScreen.getChildren().add(outView.getOutScreen());
         });
 
         // Create a field for player input
@@ -236,46 +178,6 @@ public class GameUI extends Application {
 
     public void setMailButtonText(String text) {
         mailButton.setText(text);
-    }
-
-    public void updateMailScreen(String text) {
-        Platform.runLater(() -> {
-            mailScreen.setText(text + "\n");
-            mailScreen.positionCaret(mailScreen.getLength());
-            mailScreen.setScrollTop(Double.MAX_VALUE);
-        });
-    }
-
-    public void updatePhoneScreen(String text) {
-        Platform.runLater(() -> {
-            phoneScreen.setText(text + "\n");
-            phoneScreen.positionCaret(phoneScreen.getLength());
-            phoneScreen.setScrollTop(Double.MAX_VALUE);
-        });
-    }
-
-    public void updateJobScreen(String text) {
-        Platform.runLater(() -> {
-            jobScreen.setText(text + "\n");
-            jobScreen.positionCaret(jobScreen.getLength());
-            jobScreen.setScrollTop(Double.MAX_VALUE);
-        });
-    }
-
-    public void updateCVScreen(String text) {
-        Platform.runLater(() -> {
-            cvScreen.setText(text + "\n");
-            cvScreen.positionCaret(cvScreen.getLength());
-            cvScreen.setScrollTop(Double.MAX_VALUE);
-        });
-    }
-
-    public void updateOutScreen(String text) {
-        Platform.runLater(() -> {
-            outScreen.setText(text + "\n");
-            outScreen.positionCaret(outScreen.getLength());
-            outScreen.setScrollTop(Double.MAX_VALUE);
-        });
     }
 
     public void updatePlayerStats(PlayerStats stats) {

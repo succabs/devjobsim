@@ -1,5 +1,6 @@
 package com.succabs.devjobsim.gameLogic;
 
+import com.succabs.devjobsim.ui.MailView;
 import com.succabs.devjobsim.ui.GameUI;
 import javafx.application.Platform;
 import java.util.ArrayList;
@@ -25,7 +26,7 @@ public class MailLogic {
     }
 
     // function to handle what happens when the mail button is pressed
-    public static void handleMailButton(GameUI gameUI) {
+    public static void handleMailButton(MailView mailView, GameUI gameUI) {
         StringBuilder mailText = new StringBuilder();
         if (unreadMails > 0) {
             mailText.append("You have ").append(unreadMails).append(" unread mails.\n");
@@ -38,7 +39,7 @@ public class MailLogic {
             mailText.append("----------------------\n");
         }
 
-        gameUI.updateMailScreen(mailText.toString());
+        mailView.updateMailScreen(mailText.toString());
 
         unreadMails = 0; // set unread mail count to 0
         updateMailButton(gameUI); // update the mail button

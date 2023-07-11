@@ -1,6 +1,6 @@
 package com.succabs.devjobsim.gameLogic;
 
-import com.succabs.devjobsim.ui.GameUI;
+import com.succabs.devjobsim.ui.CVView;
 import com.succabs.devjobsim.player.PlayerStats;
 
 import java.util.ArrayList;
@@ -21,7 +21,7 @@ public class CVLogic {
         return entries;
     }
 
-    public static void handleCVButton(GameUI gameUI, PlayerStats playerStats) {
+    public static void handleCVButton(CVView cvView, PlayerStats playerStats) {
         StringBuilder cvContent = new StringBuilder();
         Map<String, List<Field>> fieldsByType = new LinkedHashMap<>(); // Use LinkedHashMap to preserve insertion order
 
@@ -39,7 +39,7 @@ public class CVLogic {
             cvContent.append("----------------------\n");
         }
 
-        gameUI.updateCVScreen(cvContent.toString());
+        cvView.updateCVScreen(cvContent.toString());
     }
 
 }

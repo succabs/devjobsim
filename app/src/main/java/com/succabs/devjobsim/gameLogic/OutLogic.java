@@ -1,6 +1,6 @@
 package com.succabs.devjobsim.gameLogic;
 
-import com.succabs.devjobsim.ui.GameUI;
+import com.succabs.devjobsim.ui.OutView;
 
 import java.util.ArrayList;
 
@@ -15,14 +15,14 @@ public class OutLogic {
         availablePlaces.addAll(Arrays.asList(places));
     }
 
-    public static void handleOutButton(GameUI gameUI) {
+    public static void handleOutButton(OutView outView) {
         StringBuilder placesContent = new StringBuilder();
         placesContent.append("Available Places to Go:\n");
 
         for (Place place : availablePlaces) {
             placesContent.append(place.getName()).append("\n");
         }
-        gameUI.updateOutScreen(placesContent.toString());
+        outView.updateOutScreen(placesContent.toString());
     }
 }
 
