@@ -20,7 +20,7 @@ repositories {
 
 javafx {
     version = "20.0.1"
-    modules("javafx.controls", "javafx.fxml", "javafx.graphics")   
+    modules("javafx.controls", "javafx.fxml", "javafx.graphics","javafx.media")   
 }
 
 dependencies {

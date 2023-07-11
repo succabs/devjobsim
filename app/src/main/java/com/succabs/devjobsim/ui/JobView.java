@@ -4,7 +4,8 @@ import java.util.List;
 
 import com.succabs.devjobsim.gameLogic.JobListingLogic;
 import com.succabs.devjobsim.gameLogic.Job;
-
+import com.succabs.devjobsim.gameLogic.Mail;
+import com.succabs.devjobsim.gameLogic.MailLogic;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.HBox;
@@ -29,6 +30,9 @@ public class JobView {
             applyButton.setOnAction(event -> {
                 JobListingLogic.applyJob(job);
                 updateJobScreen(JobListingLogic.getJobs());
+                Mail mail1 = new Mail(job.getCompany(), "Your application for " + job.getPosition(),
+                        "Come to an interview!");
+                MailLogic.addMail(mail1);
             });
 
             HBox jobContainer = new HBox(nameLabel, applyButton);

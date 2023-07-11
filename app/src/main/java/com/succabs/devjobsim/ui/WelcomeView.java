@@ -19,7 +19,7 @@ public class WelcomeView {
         Label styledLogoText = new Label(logoText);
         styledLogoText.getStyleClass().add("retro-logo");
 
-        String welcomeText = "\nWelcome to Developer Job Hunt Simulator.\nTry to get a job!\n";
+        String welcomeText = "\nYour goal is to get a job.\nYou can apply for a job through the job listing, mail or phone.\nAce the interview and try to get as good salary as you can.\nKeep your stress and hunger levels low by eating or doing other tasks than job hunt.\nGood luck!";
 
         FlowPane textContainer = new FlowPane();
         textContainer.getChildren().addAll(styledLogoText, new Text(welcomeText));
