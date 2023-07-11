@@ -13,6 +13,10 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import java.net.URL;
+import javafx.util.Duration;
+
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
 
 import com.succabs.devjobsim.gameLogic.MailLogic;
 import com.succabs.devjobsim.gameLogic.PhoneLogic;
@@ -162,6 +166,25 @@ public class GameUI extends Application {
         gameWindow.setCenter(gameScreen);
         gameWindow.setBottom(inputContainer);
         gameWindow.setRight(topContainer);
+
+        // Path to the background music file
+        String musicFile = getClass().getResource("/bgmusic.wav").toString();
+
+        // Create a Media object with the music file
+        Media media = new Media(musicFile);
+        // Create a MediaPlayer and set it to play the media
+        MediaPlayer mediaPlayer = new MediaPlayer(media);
+        // Create a MediaView and bind it to the MediaPlayer
+        // Set the volume to 50% (0.5)
+        mediaPlayer.setVolume(0.5);
+        mediaPlayer.setAutoPlay(true);
+        mediaPlayer.setOnEndOfMedia(new Runnable() {
+            @Override
+            public void run() {
+                mediaPlayer.seek(Duration.ZERO);
+                mediaPlayer.play();
+            }
+        });
 
         // Create the scene with the game window
         Scene scene = new Scene(gameWindow, 800, 600);
