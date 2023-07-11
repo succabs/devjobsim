@@ -3,6 +3,8 @@ package com.succabs.devjobsim.player;
 import java.util.HashMap;
 import java.util.Map;
 
+import com.succabs.devjobsim.gameLogic.Item;
+
 public class PlayerStats {
     private String name;
     private String address;
@@ -14,6 +16,18 @@ public class PlayerStats {
     private int money;
 
     private Map<String, String> skills;
+
+    public void setStat(Item item) {
+        switch (item.getName()) {
+            case "Beer":
+                setHunger(getHunger() - 5);
+                setStress(getStress() - 10);
+                break;
+            // Add more cases for other items and their respective effects on player stats
+            default:
+                break;
+        }
+    }
 
     public PlayerStats() {
         skills = new HashMap<>();

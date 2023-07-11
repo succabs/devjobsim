@@ -12,8 +12,12 @@ import javafx.scene.layout.VBox;
 
 public class FridgeView {
     private VBox fridgeScreen;
+    private GameUI gameUI; // Reference to the GameUI instance
+    private PlayerStats playerStats;
 
-    public FridgeView() {
+    public FridgeView(GameUI gameUI, PlayerStats playerStats) {
+        this.gameUI = gameUI;
+        this.playerStats = playerStats;
         fridgeScreen = new VBox();
     }
 
@@ -30,7 +34,8 @@ public class FridgeView {
             consumeButton.setOnAction(event -> {
                 FridgeLogic.consumeItem(item);
                 updateFridgeScreen(FridgeLogic.getItems());
-
+                playerStats.setStat(item);
+                gameUI.updatePlayerStats(playerStats);
             });
 
             HBox itemContainer = new HBox(nameLabel, amountLabel, consumeButton);

@@ -58,6 +58,7 @@ public class GameUI extends Application {
         gameWindow.setStyle("-fx-background-color: #C0C0C0;"); // Set the background color
         time = new Time(this);
         GameInitializer.initializeGame();
+        PlayerStats playerStats = GameInitializer.getPlayerStats();
 
         // Create a container for the specific area
         VBox gameScreen = new VBox();
@@ -65,15 +66,13 @@ public class GameUI extends Application {
 
         this.welcomeView = new WelcomeView();
         this.mailView = new MailView();
-        this.fridgeView = new FridgeView();
+        this.fridgeView = new FridgeView(this, playerStats);
         this.jobView = new JobView();
         this.cvView = new CVView();
         this.outView = new OutView();
         this.phoneView = new PhoneView();
 
         gameScreen.getChildren().add(welcomeView.getWelcomeScreen());
-
-        PlayerStats playerStats = GameInitializer.getPlayerStats();
 
         // Create labels for player stats
         this.timeLabel = new Label();
