@@ -1,21 +1,46 @@
 package com.succabs.devjobsim.ui;
 
-import javafx.scene.control.TextArea;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
+
+import com.succabs.devjobsim.gameLogic.PhoneLogic;
 
 public class PhoneView {
-    private TextArea phoneScreen;
+    private VBox phoneScreen;
+    private GameUI gameUI; // Reference to the GameUI instance
 
-    public PhoneView() {
-        phoneScreen = new TextArea();
-        phoneScreen.setEditable(false);
-        phoneScreen.setPrefRowCount(20);
+    public PhoneView(GameUI gameUI) {
+        phoneScreen = new VBox();
+        this.gameUI = gameUI;
     }
 
-    public TextArea getPhoneScreen() {
+    public VBox getPhoneScreen() {
         return phoneScreen;
     }
 
     public void updatePhoneScreen(String phoneContent) {
-        phoneScreen.setText(phoneContent);
+        phoneScreen.getChildren().clear();
+        Label nameLabel = new Label(phoneContent + " is calling");
+        HBox phoneContainer = new HBox(nameLabel);
+        phoneScreen.getChildren().add(phoneContainer);
+        if (PhoneLogic.isRinging()) {
+            Button answerButton = new Button("Apply");
+            Button declineButton = new Button("Decline");
+            HBox buttonContainer = new HBox(answerButton, declineButton);
+            phoneScreen.getChildren().add(buttonContainer);
+            answerButton.setOnAction(event -> {
+                PhoneLogic.setIsRinging(false);
+                gameUI.stopPhoneButtonFlashingAnimation();
+                PhoneLogic.handlePhoneButton(this, gameUI);
+            });
+            declineButton.setOnAction(event -> {
+                PhoneLogic.setIsRinging(false);
+                gameUI.stopPhoneButtonFlashingAnimation();
+                PhoneLogic.handlePhoneButton(this, gameUI);
+            });
+        }
+
     }
 }

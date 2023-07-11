@@ -47,6 +47,7 @@ public class Time {
     private void advanceTime() {
         seconds++;
         MailLogic.checkMail(this, gameUI);
+        PhoneLogic.checkCalls(this, gameUI);
         setTime(this, gameUI);
 
         if (seconds >= 60) {

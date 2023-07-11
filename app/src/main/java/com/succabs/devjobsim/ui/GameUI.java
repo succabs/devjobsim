@@ -1,5 +1,7 @@
 package com.succabs.devjobsim.ui;
 
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.geometry.Insets;
@@ -51,6 +53,9 @@ public class GameUI extends Application {
     private Button fridgeButton;
     private Button outButton;
 
+    // Create a Timeline for flashing animation of the phone button
+    private Timeline phoneButtonFlashingAnimation;
+
     public static void main(String[] args) {
         launch(args);
     }
@@ -74,7 +79,7 @@ public class GameUI extends Application {
         this.jobView = new JobView();
         this.cvView = new CVView();
         this.outView = new OutView();
-        this.phoneView = new PhoneView();
+        this.phoneView = new PhoneView(this);
 
         gameScreen.getChildren().add(welcomeView.getWelcomeScreen());
 
@@ -107,7 +112,7 @@ public class GameUI extends Application {
 
         phoneButton.setOnAction(event -> {
             gameScreen.getChildren().clear();
-            PhoneLogic.handlePhoneButton(phoneView);
+            PhoneLogic.handlePhoneButton(phoneView, this);
             gameScreen.getChildren().add(phoneView.getPhoneScreen());
 
         });
@@ -215,4 +220,27 @@ public class GameUI extends Application {
             timeLabel.setText(String.format("%02d:%02d:%02d", hours, minutes, seconds));
         });
     }
+
+    // Start the flashing animation for the phone button
+    public void startPhoneButtonFlashingAnimation() {
+        // Create a timeline with alternating button styles
+        phoneButtonFlashingAnimation = new Timeline(
+                new KeyFrame(Duration.seconds(0.5), event -> phoneButton.setStyle("-fx-background-color: red;")),
+                new KeyFrame(Duration.seconds(1.0),
+                        event -> phoneButton.setStyle("-fx-background-color: transparent;")));
+        // Set the cycle count to indefinite for continuous flashing
+        phoneButtonFlashingAnimation.setCycleCount(Timeline.INDEFINITE);
+        // Start the animation
+        phoneButtonFlashingAnimation.play();
+    }
+
+    // Stop the flashing animation for the phone button
+    public void stopPhoneButtonFlashingAnimation() {
+        // Stop the animation if it is running
+        if (phoneButtonFlashingAnimation != null
+                && phoneButtonFlashingAnimation.getStatus() == Timeline.Status.RUNNING) {
+            phoneButtonFlashingAnimation.stop();
+        }
+    }
+
 }
