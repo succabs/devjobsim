@@ -3,6 +3,7 @@ package com.succabs.devjobsim.gameLogic;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
@@ -48,12 +49,14 @@ public class GameInitializer {
     private static void initializePlayerStats() {
         // Initialize the player stats and set the values
         playerStats = new PlayerStats();
-        playerStats.setName(getRandomElement(firstNames) + " " + getRandomElement(lastNames));
+        String firstName = getRandomElement(firstNames);
+        String lastName = getRandomElement(lastNames);
+        playerStats.setName(firstName + " " + lastName);
         playerStats.setAddress(getRandomElement(addresses));
         playerStats.setPhone("555-555-555");
-        playerStats.setMail(getRandomElement(firstNames) + "." + getRandomElement(lastNames) + "@devmail.com");
-        playerStats.setStress(50);
-        playerStats.setHunger(10);
+        playerStats.setMail(firstName.toLowerCase() + "." + lastName.toLowerCase() + "@devmail.com");
+        playerStats.setStress(0);
+        playerStats.setHunger(0);
         playerStats.setMoney(100);
         initializePlayerSkills();
     }
@@ -156,9 +159,13 @@ public class GameInitializer {
     }
 
     private static void initializeJobListings() {
+        Map<String, String> skills1 = new HashMap<String, String>();
+        skills1.put("Java", "Beginner");
+        Map<String, String> skills2 = new HashMap<String, String>();
+        skills2.put("Python", "Beginner");
         // Create and add job listings
-        Job job1 = new Job("Company 1", "Position 1", "Job Content 1", 5000);
-        Job job2 = new Job("Company 2", "Position 2", "Job Content 2", 6000);
+        Job job1 = new Job("Company 1", "Position 1", "Job Content 1", 5000, skills1);
+        Job job2 = new Job("Company 2", "Position 2", "Job Content 2", 6000, skills2);
         // Add job listings using JobListingLogic.addJob(job) method
         JobListingLogic.addJob(job1);
         JobListingLogic.addJob(job2);

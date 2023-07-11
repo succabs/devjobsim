@@ -11,6 +11,7 @@ Whether you're a student exploring career options or an experienced developer lo
 - jUnit: The testing is implemented with jUnit 5.
 - Git: Version control system used for project collaboration and management.
 - Gradle: Build automation tool for managing dependencies and building the project.
+- MilkyTracker: Breathtaking music.
 
 # Why?
 

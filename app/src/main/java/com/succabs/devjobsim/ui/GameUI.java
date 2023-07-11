@@ -40,6 +40,7 @@ public class GameUI extends Application {
     private PhoneView phoneView;
     private MailView mailView;
 
+    private Label dayLabel;
     private Label stressLabel;
     private Label hungerLabel;
     private Label moneyLabel;
@@ -72,6 +73,7 @@ public class GameUI extends Application {
         // Create a container for the specific area
         VBox gameScreen = new VBox();
         gameScreen.setPadding(new Insets(10)); // Set padding if needed
+        gameScreen.getStyleClass().add("gameScreen");
 
         this.welcomeView = new WelcomeView();
         this.mailView = new MailView();
@@ -84,10 +86,11 @@ public class GameUI extends Application {
         gameScreen.getChildren().add(welcomeView.getWelcomeScreen());
 
         // Create labels for player stats
+        this.dayLabel = new Label("Day 1");
         this.timeLabel = new Label();
         this.stressLabel = new Label("Stress: " + playerStats.getStress());
         this.hungerLabel = new Label("Hunger: " + playerStats.getHunger());
-        this.moneyLabel = new Label("Money: " + playerStats.getMoney());
+        this.moneyLabel = new Label("Money: " + playerStats.getMoney() + "$");
 
         // Create buttons for actions
         this.mailButton = new Button("Mail");
@@ -145,7 +148,7 @@ public class GameUI extends Application {
         // Create a container for player stats labels
         VBox statsContainer = new VBox(10); // Set spacing between labels
         statsContainer.setPadding(new Insets(10));
-        statsContainer.getChildren().addAll(timeLabel, stressLabel, hungerLabel, moneyLabel);
+        statsContainer.getChildren().addAll(dayLabel, timeLabel, stressLabel, hungerLabel, moneyLabel);
 
         // Set alignment of statsContainer
         statsContainer.setAlignment(Pos.TOP_CENTER);

@@ -22,7 +22,7 @@ public class PhoneView {
 
     public void updatePhoneScreen(String phoneContent) {
         phoneScreen.getChildren().clear();
-        Label nameLabel = new Label(phoneContent + " is calling");
+        Label nameLabel = new Label(phoneContent);
         HBox phoneContainer = new HBox(nameLabel);
         phoneScreen.getChildren().add(phoneContainer);
         if (PhoneLogic.isRinging()) {

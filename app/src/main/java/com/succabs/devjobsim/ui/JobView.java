@@ -1,6 +1,7 @@
 package com.succabs.devjobsim.ui;
 
 import java.util.List;
+import java.util.Map;
 
 import com.succabs.devjobsim.gameLogic.JobListingLogic;
 import com.succabs.devjobsim.gameLogic.Job;
@@ -8,7 +9,6 @@ import com.succabs.devjobsim.gameLogic.Mail;
 import com.succabs.devjobsim.gameLogic.MailLogic;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 
 public class JobView {
@@ -26,6 +26,18 @@ public class JobView {
         jobScreen.getChildren().clear();
         for (Job job : jobs) {
             Label nameLabel = new Label("Name: " + job.getCompany());
+            Label positionLabel = new Label("Position: " + job.getPosition());
+            Label contentLabel = new Label("Content: " + job.getContent());
+            Label salaryLabel = new Label("Salary: " + job.getSalary());
+
+            VBox skillsContainer = new VBox();
+            for (Map.Entry<String, String> entry : job.getSkillneeds().entrySet()) {
+                String skill = entry.getKey();
+                String level = entry.getValue();
+                Label skillLabel = new Label(skill + ": " + level);
+                skillsContainer.getChildren().add(skillLabel);
+            }
+
             Button applyButton = new Button("Apply");
             applyButton.setOnAction(event -> {
                 JobListingLogic.applyJob(job);
@@ -35,8 +47,10 @@ public class JobView {
                 MailLogic.addMail(mail1);
             });
 
-            HBox jobContainer = new HBox(nameLabel, applyButton);
+            VBox jobContainer = new VBox(nameLabel, positionLabel, contentLabel, salaryLabel, skillsContainer,
+                    applyButton);
             jobScreen.getChildren().add(jobContainer);
         }
     }
+
 }

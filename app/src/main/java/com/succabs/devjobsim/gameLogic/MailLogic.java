@@ -77,7 +77,7 @@ public class MailLogic {
     }
 
     public static void checkMail(Time time, GameUI gameUI) {
-        if (time.getSeconds() % 5 == 0) {
+        if (time.getSeconds() % 30 == 0) {
             // Check if there are any possible mails
             if (!possibleMails.isEmpty()) {
                 // Select a random mail

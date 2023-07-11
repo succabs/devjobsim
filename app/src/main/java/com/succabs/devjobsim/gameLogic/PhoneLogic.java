@@ -25,7 +25,7 @@ public class PhoneLogic {
     }
 
     public static void checkCalls(Time time, GameUI gameUI) {
-        if (time.getSeconds() % 10 == 0) {
+        if ((time.getMinutes() == 0) && time.getSeconds() == 30) {
             isRinging = true;
             // Start the flashing animation for the phone button
             gameUI.startPhoneButtonFlashingAnimation();

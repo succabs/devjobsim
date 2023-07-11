@@ -17,13 +17,17 @@
 }
 
 /* Style the fridge screen */
-.v-box#fridgeScreen {
-  -fx-background-color: white;
+.gameScreen {
+  -fx-border-insets: 5px;
+  -fx-background-insets: 5px;
+  -fx-padding: 10px;
+  -fx-border-color: white black black white;
+  -fx-border-width: 1px;
 }
 
-/* Style the player stats labels */
-.label.player-stats-label {
-  -fx-text-fill: white;
+/* Style the fridge screen */
+.v-box#fridgeScreen {
+  -fx-background-color: white;
 }
 
 /* Style the buttons */
