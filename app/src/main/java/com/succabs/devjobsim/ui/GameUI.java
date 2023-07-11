@@ -174,7 +174,6 @@ public class GameUI extends Application {
 
         // Path to the background music file
         String musicFile = getClass().getResource("/bgmusic.wav").toString();
-
         // Create a Media object with the music file
         Media media = new Media(musicFile);
         // Create a MediaPlayer and set it to play the media
@@ -182,14 +181,7 @@ public class GameUI extends Application {
         // Create a MediaView and bind it to the MediaPlayer
         // Set the volume to 50% (0.5)
         mediaPlayer.setVolume(0.5);
-        mediaPlayer.setAutoPlay(true);
-        mediaPlayer.setOnEndOfMedia(new Runnable() {
-            @Override
-            public void run() {
-                mediaPlayer.seek(Duration.ZERO);
-                mediaPlayer.play();
-            }
-        });
+        mediaPlayer.play();
 
         // Create the scene with the game window
         Scene scene = new Scene(gameWindow, 800, 600);
@@ -225,7 +217,8 @@ public class GameUI extends Application {
     public void startPhoneButtonFlashingAnimation() {
         // Create a timeline with alternating button styles
         phoneButtonFlashingAnimation = new Timeline(
-                new KeyFrame(Duration.seconds(0.5), event -> phoneButton.setStyle("-fx-background-color: red;")),
+                new KeyFrame(Duration.seconds(0.5),
+                        event -> phoneButton.setStyle("-fx-background-color: red;")),
                 new KeyFrame(Duration.seconds(1.0),
                         event -> phoneButton.setStyle("-fx-background-color: transparent;")));
         // Set the cycle count to indefinite for continuous flashing
@@ -240,7 +233,18 @@ public class GameUI extends Application {
         if (phoneButtonFlashingAnimation != null
                 && phoneButtonFlashingAnimation.getStatus() == Timeline.Status.RUNNING) {
             phoneButtonFlashingAnimation.stop();
+            phoneButton.setStyle("-fx-background-color: transparent;");
         }
+    }
+
+    public void playRingSound() {
+        String ringSound = getClass().getResource("/ring.mp3").toString();
+        Media ringTone = new Media(ringSound);
+        MediaPlayer mediaPlayer = new MediaPlayer(ringTone);
+        // Create a MediaView and bind it to the MediaPlayer
+        // Set the volume to 50% (0.5)
+        mediaPlayer.setVolume(0.5);
+        mediaPlayer.play();
     }
 
 }
