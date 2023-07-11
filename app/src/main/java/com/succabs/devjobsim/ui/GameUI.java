@@ -39,7 +39,7 @@ public class GameUI extends Application {
     private TextArea cvScreen;
     private TextArea jobScreen;
     private TextArea outScreen;
-    private VBox fridgeScreen;
+    private FridgeView fridgeView;
     private Label stressLabel;
     private Label hungerLabel;
     private Label moneyLabel;
@@ -126,7 +126,7 @@ public class GameUI extends Application {
         outScreen.setFocusTraversable(false); // Disable focus traversal
         outScreen.setPrefRowCount(20); // Set the number of visible rows
 
-        this.fridgeScreen = new VBox();
+        this.fridgeView = new FridgeView();
 
         gameScreen.getChildren().add(welcomeScreen);
 
@@ -155,12 +155,9 @@ public class GameUI extends Application {
         });
 
         fridgeButton.setOnAction(event -> {
-            // Clear the current content
             gameScreen.getChildren().clear();
-            fridgeScreen.getChildren().clear();
-            FridgeLogic.handleFridgeButton(this);
-            // Add the new content to the area container
-            gameScreen.getChildren().add(fridgeScreen);
+            FridgeLogic.handleFridgeButton(fridgeView); // Call the FridgeLogic to handle the fridge button
+            gameScreen.getChildren().add(fridgeView.getFridgeScreen());
         });
 
         phoneButton.setOnAction(event -> {
@@ -278,14 +275,6 @@ public class GameUI extends Application {
             outScreen.setText(text + "\n");
             outScreen.positionCaret(outScreen.getLength());
             outScreen.setScrollTop(Double.MAX_VALUE);
-        });
-    }
-
-    public void updateFridgeScreen(String text) {
-        Platform.runLater(() -> {
-            Label fridgeLabel = new Label(text); // Create a label with the desired text
-            fridgeScreen.getChildren().add(fridgeLabel); // Add the label to the fridgeScreen container
-
         });
     }
 

@@ -2,8 +2,7 @@ package com.succabs.devjobsim.gameLogic;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import com.succabs.devjobsim.ui.GameUI;
+import com.succabs.devjobsim.ui.FridgeView;
 
 public class FridgeLogic {
     private static List<Item> items = new ArrayList<>();
@@ -18,15 +17,22 @@ public class FridgeLogic {
         return items;
     }
 
-    public static void handleFridgeButton(GameUI gameUI) {
-        StringBuilder fridgeContent = new StringBuilder();
-        fridgeContent.append("You have the following items in your fridge:\n");
-
-        for (Item item : items) {
-            fridgeContent.append("Name: ").append(item.getName()).append("\n");
-            fridgeContent.append("Amount: ").append(item.getAmount()).append("\n");
-            fridgeContent.append("----------------------\n");
-        }
-        gameUI.updateFridgeScreen(fridgeContent.toString());
+    public static void handleFridgeButton(FridgeView fridgeView) {
+        fridgeView.updateFridgeScreen(getItems());
     }
+
+    public static void consumeItem(Item item) {
+
+        // Perform the consume action
+        if (item.getAmount() > 0) {
+            int amount = item.getAmount() - 1;
+            item.setAmount(amount);
+
+            // Remove the item from the list if the amount reaches 0
+            if (amount == 0) {
+                items.remove(item);
+            }
+        }
+    }
+
 }
