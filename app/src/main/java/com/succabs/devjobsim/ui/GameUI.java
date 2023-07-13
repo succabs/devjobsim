@@ -9,16 +9,22 @@ import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.Menu;
+import javafx.scene.control.MenuBar;
 import javafx.scene.control.TextArea;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import java.net.URL;
 import javafx.util.Duration;
+import javafx.scene.text.Text;
 
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
+import javafx.scene.paint.Color;
+import javafx.scene.shape.Rectangle;
 
 import com.succabs.devjobsim.gameLogic.MailLogic;
 import com.succabs.devjobsim.gameLogic.PhoneLogic;
@@ -74,6 +80,27 @@ public class GameUI extends Application {
         VBox gameScreen = new VBox();
         gameScreen.setPadding(new Insets(10)); // Set padding if needed
         gameScreen.getStyleClass().add("gameScreen");
+        // Create a MenuBar
+
+        // Create a custom layout for the top bar
+        HBox topBar = new HBox();
+        topBar.setPadding(new Insets(10));
+        topBar.setStyle(
+                "-fx-background-color: #000080;-fx-background-insets: 5px;"); // Set
+                                                                              // the
+        // background color
+        // Create a custom label for the top bar
+        Label titleLabel = new Label("Developer Job Hunt Simulator");
+        titleLabel.setStyle("-fx-text-fill: white;"); // Set the text color
+        // Add the custom label to the top bar
+        topBar.getChildren().add(titleLabel);
+
+        // Set the MenuBar as the top component of the BorderPane
+
+        BorderPane borderPane = new BorderPane();
+        borderPane.setTop(topBar);
+        borderPane.setCenter(gameScreen);
+        borderPane.getStyleClass().add("actionWindow");
 
         this.welcomeView = new WelcomeView();
         this.mailView = new MailView();
@@ -170,8 +197,8 @@ public class GameUI extends Application {
         inputContainer.setPadding(new Insets(10));
         inputContainer.getChildren().addAll(playerInputField, submitButton);
 
-        // Add the game screen and containers to the game window
-        gameWindow.setCenter(gameScreen);
+        // Add the game screen and containers to the game windo
+        gameWindow.setCenter(borderPane);
         gameWindow.setBottom(inputContainer);
         gameWindow.setRight(topContainer);
 
